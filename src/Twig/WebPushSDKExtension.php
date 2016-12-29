@@ -122,6 +122,6 @@ class WebPushSDKExtension extends \Twig_Extension
      */
     public function getName()
     {
-        return 'push_notification_web_push_sdk_extension';
+        return 'dmytrof_push_notification_web_push_sdk_extension';
     }
 }
