@@ -1,0 +1,4 @@
+{% if wrapScript %}<script>{% endif %}
+{% if tags|length %}OneSignal.push(function(){OneSignal.sendTags({{ tags|json_encode()|raw }});});{% endif %}
+{% if removableTags|length %}OneSignal.push(function(){OneSignal.deleteTags({{ removableTags|json_encode()|raw }});});{% endif %}
+{% if wrapScript %}</script>{% endif %}

@@ -1,0 +1,24 @@
+parameters:
+
+    dmytrof_push_notification.twig_extension.config_parameter.class: Dmytrof\PushNotificationBundle\Twig\ConfigParameterExtension
+    dmytrof_push_notification.twig_extension.web_push_sdk.class:     Dmytrof\PushNotificationBundle\Twig\WebPushSDKExtension
+
+services:
+
+    dmytrof_push_notification.config_parameter.twig_extension:
+        class: "%dmytrof_push_notification.twig_extension.config_parameter.class%"
+        public: false
+        calls:
+            - [ setContainer, [ "@service_container" ] ]
+        tags:
+            - { name: twig.extension }
+
+    dmytrof_push_notification.web_push_sdk.twig_extension:
+        class: "%dmytrof_push_notification.twig_extension.web_push_sdk.class%"
+        public: false
+        calls:
+            - [ setProvider, [ "@dmytrof_push_notification.provider" ] ]
+        tags:
+            - { name: twig.extension }
+
+

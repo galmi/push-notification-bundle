@@ -1,0 +1,45 @@
+parameters:
+    one_signal.class:                         OneSignal\OneSignal
+    one_signal.config.class:                  OneSignal\Config
+    one_signal.guzzle.client.class:           GuzzleHttp\Client
+    one_signal.guzzle.adapter.class:          Http\Adapter\Guzzle6\Client
+    one_signal.guzzle.message_factory.class:  Http\Message\MessageFactory\GuzzleMessageFactory
+    one_signal.guzzle.http_client.class:      Http\Client\Common\HttpMethodsClient
+
+    dmytrof_push_notification.provider.one_signal.class: Dmytrof\PushNotificationBundle\Provider\OneSignal
+    dmytrof_push_notification.helper.tags.class:         Dmytrof\PushNotificationBundle\Helper\Tags
+
+services:
+
+    one_signal_config:
+        class: "%one_signal.config.class%"
+        public: false
+        calls:
+            - [ setApplicationId, [ "%dmytrof_push_notification.one_signal.app_id%" ] ]
+            - [ setApplicationAuthKey, [ "%dmytrof_push_notification.one_signal.app_auth_key%" ] ]
+
+    one_signal_guzzle_client:
+        class: "%one_signal.guzzle.client.class%"
+        public: false
+
+    one_signal_guzzle_adapter:
+        class: "%one_signal.guzzle.adapter.class%"
+        public: false
+        arguments: [ "@one_signal_guzzle_client" ]
+
+    one_signal_guzzle_message_factory:
+        class: "%one_signal.guzzle.message_factory.class%"
+        public: false
+
+    one_signal_guzzle_http_client:
+        class: "%one_signal.guzzle.http_client.class%"
+        public: false
+        arguments: [ "@one_signal_guzzle_adapter", "@one_signal_guzzle_message_factory" ]
+
+    one_signal:
+        class: "%one_signal.class%"
+        arguments: [ "@one_signal_config", "@one_signal_guzzle_http_client" ]
+
+    dmytrof_push_notification.provider.one_signal:
+        class: "%dmytrof_push_notification.provider.one_signal.class%"
+        arguments: [ "@one_signal", "@session", "@templating", "%dmytrof_push_notification.provider.code%" ]
