@@ -14,9 +14,9 @@
         "psr-4": { "Dmytrof\\PushNotificationBundle\\": "src/" }
     },
     "require": {
-        "php": ">=5.3",
+        "php": ">=5.5",
         "symfony/framework-bundle": "^2.8.0",
-        "norkunas/onesignal-php-api": "v0.1.*"
+        "norkunas/onesignal-php-api": "v1.0.*"
     },
     "require-dev": {
         "phpunit/phpunit": "4.*"
