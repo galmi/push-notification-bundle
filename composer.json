@@ -11,7 +11,7 @@
         }
     ],
     "autoload": {
-        "psr-4": { "Dmytrof\\PushNotificationBundle\\": "src/" }
+        "psr-4": { "Dmytrof\\PushNotificationBundle\\": "src" }
     },
     "require": {
         "php" : ">=5.3.9",
@@ -20,7 +20,8 @@
         "norkunas/onesignal-php-api": "v1.0.*"
     },
     "require-dev": {
-        "phpunit/phpunit": "4.*"
     },
+    "suggest": {
+  	},
     "minimum-stability": "dev"
 }
