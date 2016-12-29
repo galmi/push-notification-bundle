@@ -1,6 +1,3 @@
-{% if locale is not defined %}
-	{% set locale = app.request.locale %}
-{% endif %}
 <notification>
     <subject>{% block Subject %}{{ app.site.title }}{% endblock %}</subject>
     <content>{% block Message %}Test message{% endblock %}</content>

@@ -16,6 +16,7 @@
     "require": {
         "php": ">=5.3",
         "symfony/framework-bundle": "^2.8.0",
+        "norkunas/onesignal-php-api": "v0.1.*"
     },
     "require-dev": {
         "phpunit/phpunit": "4.*"
