@@ -9,7 +9,7 @@ use Symfony\Component\DependencyInjection\Loader;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 
 
-class BikePushNotificationExtension extends Extension
+class DmytrofPushNotificationExtension extends Extension
 {
     /**
      * {@inheritdoc}
