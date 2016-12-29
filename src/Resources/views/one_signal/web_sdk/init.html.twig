@@ -2,9 +2,9 @@
 <script>
     var OneSignal = window.OneSignal || [];
     OneSignal.push(["init", {
-      appId: "{{ push_notification_parameter('one_signal.app_id') }}",
+      appId: "{{ dmytrof_push_notification_parameter('one_signal.app_id') }}",
       autoRegister: true, /* Set to true to automatically prompt visitors */
-      {% if push_notification_parameter('one_signal.subdomain') %}subdomainName: "{{ push_notification_parameter('one_signal.subdomain') }}",{% endif %}
+      {% if dmytrof_push_notification_parameter('one_signal.subdomain') %}subdomainName: "{{ dmytrof_push_notification_parameter('one_signal.subdomain') }}",{% endif %}
       httpPermissionRequest: {
         enable: true
       },
@@ -13,6 +13,6 @@
       }
     }]);
 
-    {{ push_notification_tags() }}
+    {{ dmytrof_push_notification_tags() }}
 
 </script>
