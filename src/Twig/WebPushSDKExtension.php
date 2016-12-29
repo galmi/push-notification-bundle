@@ -75,11 +75,11 @@ class WebPushSDKExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            new \Twig_SimpleFunction('push_notification_web_sdk', array($this, 'renderSDK'), array(
+            new \Twig_SimpleFunction('dmytrof_push_notification_web_sdk', array($this, 'renderSDK'), array(
                'needs_environment' => true,
                'is_safe' => array('html'),
             )),
-            new \Twig_SimpleFunction('push_notification_tags', array($this, 'renderTags'), array(
+            new \Twig_SimpleFunction('dmytrof_push_notification_tags', array($this, 'renderTags'), array(
                 'needs_environment' => true,
                 'is_safe' => array('html'),
             ))
@@ -97,7 +97,7 @@ class WebPushSDKExtension extends \Twig_Extension
             throw new RuntimeException('Web SDK is already rendered');
         }
         $this->setSDKRendered();
-        return $environment->render('BikePushNotificationBundle:'.$this->getProvider()->getCode().':web_sdk/init.html.twig');
+        return $environment->render('DmytrofPushNotificationBundle:'.$this->getProvider()->getCode().':web_sdk/init.html.twig');
     }
 
     /**
@@ -108,7 +108,7 @@ class WebPushSDKExtension extends \Twig_Extension
      */
     public function renderTags(\Twig_Environment $environment, $wrapScript=false)
     {
-        return $environment->render('BikePushNotificationBundle:'.$this->getProvider()->getCode().':web_sdk/tags.html.twig', array(
+        return $environment->render('DmytrofPushNotificationBundle:'.$this->getProvider()->getCode().':web_sdk/tags.html.twig', array(
             'wrapScript'    => $wrapScript,
             'tags'          => $this->getProvider()->getTags(true),
             'removableTags' => $this->getProvider()->getRemovableTags(true),
