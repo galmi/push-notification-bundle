@@ -25,6 +25,7 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('app_id')->isRequired()->end()
                         ->scalarNode('app_auth_key')->isRequired()->end()
                         ->scalarNode('subdomain')->defaultFalse()->end()
+                        ->scalarNode('safari_web_id')->defaultFalse()->end()
                     ->end()
                 ->end()
             ->end()

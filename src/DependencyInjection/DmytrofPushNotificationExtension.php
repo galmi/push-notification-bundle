@@ -49,6 +49,7 @@ class DmytrofPushNotificationExtension extends Extension
         $container->setParameter($this->getAlias().'.one_signal.app_id', $config['app_id']);
         $container->setParameter($this->getAlias().'.one_signal.app_auth_key', $config['app_auth_key']);
         $container->setParameter($this->getAlias().'.one_signal.subdomain', $config['subdomain']);
+        $container->setParameter($this->getAlias().'.one_signal.safari_web_id', $config['safari_web_id']);
         $container->setAlias($this->getAlias().'.provider', $this->getAlias().'.provider.one_signal');
     }
 }

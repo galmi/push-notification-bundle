@@ -5,6 +5,7 @@
       appId: "{{ dmytrof_push_notification_parameter('one_signal.app_id') }}",
       autoRegister: true, /* Set to true to automatically prompt visitors */
       {% if dmytrof_push_notification_parameter('one_signal.subdomain') %}subdomainName: "{{ dmytrof_push_notification_parameter('one_signal.subdomain') }}",{% endif %}
+      {% if dmytrof_push_notification_parameter('one_signal.safari_web_id') %}safari_web_id: "{{ dmytrof_push_notification_parameter('one_signal.safari_web_id') }}",{% endif %}
       httpPermissionRequest: {
         enable: true
       },
