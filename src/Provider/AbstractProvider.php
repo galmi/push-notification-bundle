@@ -74,7 +74,7 @@ abstract class AbstractProvider implements ProviderInterface
      */
     public function getTags($clearFlag = false)
     {
-        $tags = $this->getSession()->get(static::TAGS_SESSION_KEY, array());
+        $tags = $this->getSession()->get(static::TAGS_SESSION_KEY, []);
         if ($clearFlag) {
             $this->getSession()->remove(static::TAGS_SESSION_KEY);
         }
@@ -95,7 +95,7 @@ abstract class AbstractProvider implements ProviderInterface
      */
     public function addTag($key, $value)
     {
-        return $this->addTags(array($key => $value));
+        return $this->addTags([$key => $value]);
     }
 
     /**
@@ -113,7 +113,7 @@ abstract class AbstractProvider implements ProviderInterface
      */
     public function getRemovableTags($clearFlag = false)
     {
-        $tags = $this->getSession()->get(static::REMOVABLE_TAGS_SESSION_KEY, array());
+        $tags = $this->getSession()->get(static::REMOVABLE_TAGS_SESSION_KEY, []);
         if ($clearFlag) {
             $this->getSession()->remove(static::REMOVABLE_TAGS_SESSION_KEY);
         }

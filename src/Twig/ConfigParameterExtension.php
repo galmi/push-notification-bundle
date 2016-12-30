@@ -52,7 +52,7 @@ class ConfigParameterExtension extends \Twig_Extension
      */
     public function getFunctions()
     {
-        return array(
+        return [
             new \Twig_SimpleFunction('dmytrof_push_notification_parameter', function($name)
             {
                 if (substr($name, 0, strlen($this->getConfigPrefix())) != $this->getConfigPrefix()) {
@@ -60,7 +60,7 @@ class ConfigParameterExtension extends \Twig_Extension
                 }
                 return $this->getContainer()->getParameter($name);
             })
-        );
+        ];
     }
 
 

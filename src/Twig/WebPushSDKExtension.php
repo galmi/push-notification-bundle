@@ -74,16 +74,16 @@ class WebPushSDKExtension extends \Twig_Extension
      */
     public function getFunctions()
     {
-        return array(
-            new \Twig_SimpleFunction('dmytrof_push_notification_web_sdk', array($this, 'renderSDK'), array(
+        return [
+            new \Twig_SimpleFunction('dmytrof_push_notification_web_sdk', [$this, 'renderSDK'], [
                'needs_environment' => true,
-               'is_safe' => array('html'),
-            )),
-            new \Twig_SimpleFunction('dmytrof_push_notification_tags', array($this, 'renderTags'), array(
+               'is_safe' => ['html'],
+            ]),
+            new \Twig_SimpleFunction('dmytrof_push_notification_tags', [$this, 'renderTags'], [
                 'needs_environment' => true,
-                'is_safe' => array('html'),
-            ))
-        );
+                'is_safe' => ['html'],
+            ])
+        ];
     }
 
     /**
@@ -108,11 +108,11 @@ class WebPushSDKExtension extends \Twig_Extension
      */
     public function renderTags(\Twig_Environment $environment, $wrapScript=false)
     {
-        return $environment->render('DmytrofPushNotificationBundle:'.$this->getProvider()->getCode().':web_sdk/tags.html.twig', array(
+        return $environment->render('DmytrofPushNotificationBundle:'.$this->getProvider()->getCode().':web_sdk/tags.html.twig', [
             'wrapScript'    => $wrapScript,
             'tags'          => $this->getProvider()->getTags(true),
             'removableTags' => $this->getProvider()->getRemovableTags(true),
-        ));
+        ]);
     }
 
     /**

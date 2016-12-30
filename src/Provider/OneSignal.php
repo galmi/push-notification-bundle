@@ -44,16 +44,16 @@ class OneSignal extends AbstractProvider
     {
         $this->prepareMessage($message);
 
-        $notificationData = array(
-            'contents' => array(
+        $notificationData = [
+            'contents' => [
                 $message->getLocale() => $message->getContent(),
-            ),
-        );
+            ],
+        ];
 
         if ($message->getSubject()) {
-            $notificationData['headings'] = array(
+            $notificationData['headings'] = [
                 $message->getLocale() => $message->getSubject(),
-            );
+            ];
         }
 
         if ($message->getFilters()) {

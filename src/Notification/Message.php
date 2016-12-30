@@ -14,10 +14,10 @@ class Message
     protected $subject;
     protected $content;
     protected $url;
-    protected $data = array();
-    protected $filters = array();
-    protected $includedSegments = array();
-    protected $excludedSegments = array();
+    protected $data = [];
+    protected $filters = [];
+    protected $includedSegments = [];
+    protected $excludedSegments = [];
 
     public function __construct($content=null, $subject=null, $locale=null)
     {
@@ -39,7 +39,7 @@ class Message
      *
      * @return Message
      */
-    public function setTemplate($template, array $templateParams=array())
+    public function setTemplate($template, array $templateParams=[])
     {
         $this->template = func_get_args();
         return $this;
@@ -173,7 +173,7 @@ class Message
      */
     public function clearFilters()
     {
-        $this->filters = array();
+        $this->filters = [];
         return $this;
     }
 
@@ -188,16 +188,16 @@ class Message
     public function filterByTag($key, $relation, $value='', $or=false)
     {
         if ($or) {
-            array_push($this->fields, array(
+            array_push($this->fields, [
                 'operator' => 'OR',
-            ));
+            ]);
         }
-        array_push($this->filters, array(
+        array_push($this->filters, [
             'field' => 'tag',
             'key' => $key,
             'relation' => $relation,
             'value' => $value,
-        ));
+        ]);
 
         return $this;
     }
@@ -215,7 +215,7 @@ class Message
      */
     public function clearIncludedSegments()
     {
-        $this->includedSegments = array();
+        $this->includedSegments = [];
         return $this;
     }
 
@@ -243,7 +243,7 @@ class Message
      */
     public function clearExcludedSegments()
     {
-        $this->excludedSegments = array();
+        $this->excludedSegments = [];
         return $this;
     }
 
@@ -269,7 +269,7 @@ class Message
             throw new RuntimeException('Undefined template for rendering notification');
         }
         $dom = new \DOMDocument;
-        $dom->loadXML(call_user_func_array(array($templating, 'render'), $this->getTemplate()));
+        $dom->loadXML(call_user_func_array([$templating, 'render'], $this->getTemplate()));
         $notification = simplexml_import_dom($dom);
 
         $this->setSubject(trim(strip_tags($notification->subject)));

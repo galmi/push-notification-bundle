@@ -31,7 +31,7 @@ class DmytrofPushNotificationExtension extends Extension
                 throw new InvalidConfigurationException('The child node "provider" at path "'.$this->getAlias().'" must be "one_signal"');
         }
 
-        $container->getDefinition($this->getAlias().'.config_parameter.twig_extension')->addMethodCall('setConfigPrefix', array($this->getAlias()));
+        $container->getDefinition($this->getAlias().'.config_parameter.twig_extension')->addMethodCall('setConfigPrefix', [$this->getAlias()]);
     }
 
     /**
@@ -45,11 +45,11 @@ class DmytrofPushNotificationExtension extends Extension
         if (!$config['enabled']) {
             throw new InvalidConfigurationException('The configuration "one_signal" at path "'.$this->getAlias().'" must be enabled.');
         }
+        foreach (array_diff_key($config, ['enabled' => true]) as $key => $value)
+        {
+            $container->setParameter($this->getAlias().'.one_signal.'.$key, $value);
+        }
         $container->setParameter($this->getAlias().'.provider.code', 'one_signal');
-        $container->setParameter($this->getAlias().'.one_signal.app_id', $config['app_id']);
-        $container->setParameter($this->getAlias().'.one_signal.app_auth_key', $config['app_auth_key']);
-        $container->setParameter($this->getAlias().'.one_signal.subdomain', $config['subdomain']);
-        $container->setParameter($this->getAlias().'.one_signal.safari_web_id', $config['safari_web_id']);
         $container->setAlias($this->getAlias().'.provider', $this->getAlias().'.provider.one_signal');
     }
 }
