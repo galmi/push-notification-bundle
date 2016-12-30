@@ -105,9 +105,9 @@ Tags will be removed after rendering of layout with Web Push SDK
 
 		$provider = $this->get('dmytrof_push_notification.provider');
 		$message = $provider->createMessage()
-                      		->setSubject('Message Subject')
+									->setSubject('Message Subject')
 									->setContent('Test Message for all')
-                           	->includeSegments(['All']);
+									->includeSegments(['All']);
 
 		$provider->sendMessage($message);
 
@@ -115,23 +115,24 @@ Tags will be removed after rendering of layout with Web Push SDK
     	// Filter by tags
 
     	$message = $provider->createMessage()
-                      		->setSubject('Message Subject')
+									->setSubject('Message Subject')
 									->setContent('Filtered by tags')
-                           	->filterByTag('tagName1', '=', 'value1')
-                           	->filterByTag('tagName2', '=', 'value2', true);
+									->filterByTag('tagName1', '=', 'value1')
+									->filterByTag('tagName2', '=', 'value2', true);
       	$provider->sendMessage($message);
 
 
 		// Send templated message to user
 
 		$message = $provider->createMessage()
-                            ->setTemplate('AppBundle:PushNotification:test_message.html.twig', [
-                                'user' => $user
-                            ])
-                            ->filterByTag('userId', '=', $user->getId());
+									->setTemplate('AppBundle:PushNotification:test_message.html.twig', [
+										'user' => $user
+									])
+									->filterByTag('userId', '=', $user->getId());
 		$provider->sendMessage($message);
 	}
 
+Configure message template:
 
 	{#} 'AppBundle:PushNotification:test_message.html.twig' {#}
 	{% extends 'DmytrofPushNotificationBundle:PushNotification:layout.html.twig' %}
