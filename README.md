@@ -143,7 +143,7 @@ Configure message template:
 	{% endblock %}
 
 	{% block Message %}
-		Youruser ID: {{ user.id }}
+		Your user ID: {{ user.id }}
 	{% endblock %}
 
 	{% block Url %}
