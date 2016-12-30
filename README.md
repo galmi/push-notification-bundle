@@ -6,7 +6,7 @@ Symfony2 bundle for sending push notifications with OneSignal
 
 ### Step 1: Composer require
 
-	$ php composer.phar require "norkunas/onesignal-php-api":"1.0.x-dev" "dmytrof/push-notification-bundle"
+	$ php composer.phar require "norkunas/onesignal-php-api":"1.0.x-dev" "dmytrof/push-notification-bundle":"0.x-dev"
 
 ### Step2: Enable the bundle in the kernel
 
