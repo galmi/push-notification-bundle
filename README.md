@@ -27,12 +27,12 @@ Enable the bundle in your config.yml:
 
     # app/config/config.yml
     dmytrof_push_notification:
-    provider: one_signal
-    one_signal:													# See: https://documentation.onesignal.com/docs/web-push-sdk-setup-http
-        app_id: "%one_signal.app_id%"
-        app_auth_key: "%one_signal.auth_key%"
-        safari_web_id: "%one_signal.safari_web_id%" 	# Safari Support (Optional). See: https://documentation.onesignal.com/docs/web-push-sdk-setup-http#section-3-safari-support-optional-
-        subdomain: "%one_signal.subdomain%"				# HTTP Setup ONLY. See https://documentation.onesignal.com/docs/web-push-sdk-setup-http#section-1-4-choose-subdomain
+	    provider: one_signal
+	    one_signal:													# See: https://documentation.onesignal.com/docs/web-push-sdk-setup-http
+	        app_id: "%one_signal.app_id%"
+	        app_auth_key: "%one_signal.auth_key%"
+	        safari_web_id: "%one_signal.safari_web_id%" 	# Safari Support (Optional). See: https://documentation.onesignal.com/docs/web-push-sdk-setup-http#section-3-safari-support-optional-
+	        subdomain: "%one_signal.subdomain%"				# HTTP Setup ONLY. See https://documentation.onesignal.com/docs/web-push-sdk-setup-http#section-1-4-choose-subdomain
 
 
 ## Usage
@@ -44,8 +44,6 @@ Enable the bundle in your config.yml:
 	{# ... #}
 
 	{{ dmytrof_push_notification_web_sdk() }}
-
-	{# ... #}
 	</head>
 
 
@@ -56,7 +54,7 @@ Enable the bundle in your config.yml:
 
 	public function addTagAction()
 	{
-	   // ...
+		// ...
 
 		$this->get('dmytrof_push_notification.provider')->addTag('tagName', 'tagValue');
 
@@ -65,11 +63,11 @@ Enable the bundle in your config.yml:
 
 	public function addTagsAction()
 	{
-	   // ...
+		// ...
 
 		$this->get('dmytrof_push_notification.provider')->addTags([
 			'tagName1' => 'value1',
-			'tagName2' => 'value2',
+			'tagName2' => 'value2'
 		]);
 
     	// ...
@@ -84,11 +82,11 @@ Users will be tagged after rendering of layout with Web Push SDK
 
 	public function removeTagsAction()
 	{
-	   // ...
+		// ...
 
 		$this->get('dmytrof_push_notification.provider')->removeTags([
-			'tagName1' => 'value1',
-			'tagName2' => 'value2',
+			'tagName1',
+			'tagName2'
 		]);
 
     	// ...
@@ -103,7 +101,7 @@ Tags will be removed after rendering of layout with Web Push SDK
 
 	public function sendNotificationAction()
 	{
-	   // Send to all
+		// Send to all
 
 		$provider = $this->get('dmytrof_push_notification.provider');
 		$message = $provider->createMessage()
@@ -119,7 +117,7 @@ Tags will be removed after rendering of layout with Web Push SDK
     	$message = $provider->createMessage()
                       		->setSubject('Message Subject')
 									->setContent('Filtered by tags')
-                           	->filterByTag('tagName1', '=', 'value1');
+                           	->filterByTag('tagName1', '=', 'value1')
                            	->filterByTag('tagName2', '=', 'value2', true);
       	$provider->sendMessage($message);
 
@@ -128,7 +126,7 @@ Tags will be removed after rendering of layout with Web Push SDK
 
 		$message = $provider->createMessage()
                             ->setTemplate('AppBundle:PushNotification:test_message.html.twig', [
-                                'user' => $user,
+                                'user' => $user
                             ])
                             ->filterByTag('userId', '=', $user->getId());
 		$provider->sendMessage($message);
