@@ -21,7 +21,6 @@
     },
     "require-dev": {
         "phpunit/phpunit": "5.*"
-    }
     },
     "suggest": {
         "twig/twig": "To render Web Push SDK with a twig template"
