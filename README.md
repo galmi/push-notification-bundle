@@ -1,4 +1,5 @@
-# one-signal-bundle
+# PushNotificationBundle
+
 Symfony2 bundle for sending push notifications with OneSignal
 
 ## Installation
