@@ -94,7 +94,7 @@ class OneSignal extends AbstractProvider
         if (!isset($response['error'])) {
             return true;
         } else {
-            $this->errorMessage = implode('; ', $response['error']);
+            $this->errorMessage = join('; ', $response['error']);
             $this->errorCode = null;
             return false;
         }

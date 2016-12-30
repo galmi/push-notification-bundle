@@ -22,7 +22,8 @@
     "require-dev": {
     },
     "suggest": {
-  	},
+        "twig/twig": "To render Web Push SDK with a twig template"
+    },
     "minimum-stability": "dev",
     "extra": {
         "branch-alias": {
