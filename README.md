@@ -134,7 +134,7 @@ Tags will be removed after rendering of layout with Web Push SDK
 
 Configure message template:
 
-	{#} 'AppBundle:PushNotification:test_message.html.twig' {#}
+	{# 'AppBundle:PushNotification:test_message.html.twig' #}
 	{% extends 'DmytrofPushNotificationBundle:PushNotification:layout.html.twig' %}
 
 	{% block Subject %}
