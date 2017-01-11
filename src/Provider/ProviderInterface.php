@@ -2,16 +2,16 @@
 
 namespace Dmytrof\PushNotificationBundle\Provider;
 
-use Dmytrof\PushNotificationBundle\Notification\Message;
+use Dmytrof\PushNotificationBundle\Model\Notification;
 
 interface ProviderInterface
 {
     /**
-     * Return new instance of Message
+     * Return new instance of Notification
      *
-     * @return Message
+     * @return Notification
      */
-    public function createMessage($content=null, $subject=null, $locale=null);
+    public function createNotification($content=null, $subject=null, $locale=null);
 
     /**
      * Return provider's code
@@ -70,10 +70,10 @@ interface ProviderInterface
     public function getRemovableTags($clearFlag = false);
 
     /**
-     * Send message
+     * Send notification
      *
-     * @param Message $message
+     * @param Notification $notification
      * @return boolean
      */
-    public function sendMessage(Message $message);
+    public function sendNotification(Notification $notification);
 }

@@ -5,7 +5,7 @@ namespace Dmytrof\PushNotificationBundle\Provider;
 use Dmytrof\PushNotificationBundle\Provider\ProviderInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Templating\EngineInterface;
-use Dmytrof\PushNotificationBundle\Notification\Message;
+use Dmytrof\PushNotificationBundle\Model\Notification;
 
 abstract class AbstractProvider implements ProviderInterface
 {
@@ -55,9 +55,9 @@ abstract class AbstractProvider implements ProviderInterface
      *
      * {@inheritDoc}
      */
-    public function createMessage($content=null, $subject=null, $locale=null)
+    public function createNotification($content=null, $subject=null, $locale=null)
     {
-        return new Message();
+        return new Notification();
     }
 
     /**
@@ -121,14 +121,14 @@ abstract class AbstractProvider implements ProviderInterface
     }
 
     /**
-     * @param Message $message
+     * @param Notification $notification
      *
      * @return ProviderInterface
      */
-    protected function prepareMessage(Message $message)
+    protected function prepareNotification(Notification $notification)
     {
-        if (!is_null($message->getTemplate())) {
-            $message->prepareFromTemplate($this->getTemplating());
+        if (!is_null($notification->getTemplate())) {
+            $notification->prepareFromTemplate($this->getTemplating());
         }
         return $this;
     }

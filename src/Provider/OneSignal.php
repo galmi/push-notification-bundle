@@ -6,7 +6,7 @@ use Dmytrof\PushNotificationBundle\Provider\AbstractProvider;
 use OneSignal\OneSignal as OneSignalApi;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Templating\EngineInterface;
-use Dmytrof\PushNotificationBundle\Notification\Message;
+use Dmytrof\PushNotificationBundle\Model\Notification;
 
 class OneSignal extends AbstractProvider
 {
@@ -40,40 +40,40 @@ class OneSignal extends AbstractProvider
     /**
      * {@inheritDoc}
      */
-    public function sendMessage(Message $message)
+    public function sendNotification(Notification $notification)
     {
-        $this->prepareMessage($message);
+        $this->prepareNotification($notification);
 
         $notificationData = [
             'contents' => [
-                $message->getLocale() => $message->getContent(),
+                $notification->getLocale() => $notification->getContent(),
             ],
         ];
 
-        if ($message->getSubject()) {
+        if ($notification->getSubject()) {
             $notificationData['headings'] = [
-                $message->getLocale() => $message->getSubject(),
+                $notification->getLocale() => $notification->getSubject(),
             ];
         }
 
-        if ($message->getFilters()) {
-            $notificationData['filters'] = $message->getFilters();
+        if ($notification->getFilters()) {
+            $notificationData['filters'] = $notification->getFilters();
         }
 
-        if ($message->getIncludedSegments()) {
-            $notificationData['included_segments'] = $message->getIncludedSegments();
+        if ($notification->getIncludedSegments()) {
+            $notificationData['included_segments'] = $notification->getIncludedSegments();
         }
 
-        if ($message->getExcludedSegments()) {
-            $notificationData['excluded_segments'] = $message->getExcludedSegments();
+        if ($notification->getExcludedSegments()) {
+            $notificationData['excluded_segments'] = $notification->getExcludedSegments();
         }
 
-        if ($message->getUrl()) {
-            $notificationData['url'] = $message->getUrl();
+        if ($notification->getUrl()) {
+            $notificationData['url'] = $notification->getUrl();
         }
 
-        if ($message->getData()) {
-            $notificationData['data'] = $message->getData();
+        if ($notification->getData()) {
+            $notificationData['data'] = $notification->getData();
         }
 
         return $this->sendPush($notificationData);

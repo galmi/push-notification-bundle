@@ -1,11 +1,11 @@
 <?php
 
-namespace Dmytrof\PushNotificationBundle\Notification;
+namespace Dmytrof\PushNotificationBundle\Model;
 
 use Symfony\Component\Templating\EngineInterface;
 use Dmytrof\PushNotificationBundle\Exception\RuntimeException;
 
-class Message
+class Notification
 {
     const DEFAULT_LOCALE = 'en';
 
@@ -37,7 +37,7 @@ class Message
     /**
      * @param string $template
      *
-     * @return Message
+     * @return Notification
      */
     public function setTemplate($template, array $templateParams=[])
     {
@@ -46,7 +46,7 @@ class Message
     }
 
     /**
-     * @return Message
+     * @return Notification
      */
     public function removeTemplate()
     {
@@ -73,7 +73,7 @@ class Message
     /**
      * @param string $url
      *
-     * @return Message
+     * @return Notification
      */
     public function setUrl($url)
     {
@@ -84,7 +84,7 @@ class Message
     /**
      * @param array $data
      *
-     * @return Message
+     * @return Notification
      */
     public function setData(array $data)
     {
@@ -95,7 +95,7 @@ class Message
     /**
      * @param array $data
      *
-     * @return Message
+     * @return Notification
      */
     public function addData(array $data)
     {
@@ -130,7 +130,7 @@ class Message
     /**
      * @param string $subject
      *
-     * @return Message
+     * @return Notification
      */
     public function setSubject($subject)
     {
@@ -141,7 +141,7 @@ class Message
     /**
      * @param string $content
      *
-     * @return Message
+     * @return Notification
      */
     public function setContent($content)
     {
@@ -152,7 +152,7 @@ class Message
     /**
      * @param string $locale
      *
-     * @return Message
+     * @return Notification
      */
     public function setLocale($locale)
     {
@@ -169,7 +169,7 @@ class Message
     }
 
     /**
-     * @return Message
+     * @return Notification
      */
     public function clearFilters()
     {
@@ -183,7 +183,7 @@ class Message
      * @param string $value
      * @param boolean $or
      *
-     * @return Message
+     * @return Notification
      */
     public function filterByTag($key, $relation, $value='', $or=false)
     {
@@ -211,7 +211,7 @@ class Message
     }
 
     /**
-     * @return Message
+     * @return Notification
      */
     public function clearIncludedSegments()
     {
@@ -222,7 +222,7 @@ class Message
     /**
      * @param string[] $segments
      *
-     * @return Message
+     * @return Notification
      */
     public function includeSegments(array $segments)
     {
@@ -239,7 +239,7 @@ class Message
     }
 
     /**
-     * @return Message
+     * @return Notification
      */
     public function clearExcludedSegments()
     {
@@ -250,7 +250,7 @@ class Message
     /**
      * @param string[] $segments
      *
-     * @return Message
+     * @return Notification
      */
     public function excludeSegments(array $segments)
     {
@@ -261,7 +261,7 @@ class Message
     /**
      * @param EngineInterface $templating
      *
-     * @return Message
+     * @return Notification
      */
     public function prepareFromTemplate(EngineInterface $templating)
     {
