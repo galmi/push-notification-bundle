@@ -107,7 +107,7 @@ Tags will be removed after rendering of layout with Web Push SDK
 		$provider = $this->get('dmytrof_push_notification.provider');
 		$notification = $provider->createNotification()
 									->setSubject('Notification Subject')
-									->setContent('Test notification for all')
+									->setMessage('Test notification for all')
 									->includeSegments(['All']);
 
 		$provider->sendNotification($notification);
@@ -117,7 +117,7 @@ Tags will be removed after rendering of layout with Web Push SDK
 
     	$notification = $provider->createNotification()
 									->setSubject('Notification Subject')
-									->setContent('Filtered by tags')
+									->setMessage('Filtered by tags')
 									->filterByTag('tagName1', '=', 'value1')
 									->filterByTag('tagName2', '=', 'value2', true);
       	$provider->sendNotification($notification);

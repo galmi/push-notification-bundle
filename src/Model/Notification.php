@@ -12,16 +12,16 @@ class Notification
     protected $template;
     protected $locale;
     protected $subject;
-    protected $content;
+    protected $message;
     protected $url;
     protected $data = [];
     protected $filters = [];
     protected $includedSegments = [];
     protected $excludedSegments = [];
 
-    public function __construct($content=null, $subject=null, $locale=null)
+    public function __construct($message=null, $subject=null, $locale=null)
     {
-        $this->setContent($content);
+        $this->setMessage($message);
         $this->setSubject($subject);
         $this->setLocale($locale ?: static::DEFAULT_LOCALE);
     }
@@ -112,11 +112,11 @@ class Notification
     }
 
     /**
-     * @return string $content
+     * @return string $message
      */
-    public function getContent()
+    public function getMessage()
     {
-        return $this->content;
+        return $this->message;
     }
 
     /**
@@ -139,13 +139,13 @@ class Notification
     }
 
     /**
-     * @param string $content
+     * @param string $message
      *
      * @return Notification
      */
-    public function setContent($content)
+    public function setMessage($message)
     {
-        $this->content = $content;
+        $this->message = $message;
         return $this;
     }
 
@@ -273,7 +273,7 @@ class Notification
         $notification = simplexml_import_dom($dom);
 
         $this->setSubject(trim(strip_tags($notification->subject)));
-        $this->setContent(trim(strip_tags($notification->content)));
+        $this->setMessage(trim(strip_tags($notification->message)));
         $this->setUrl(trim($notification->url));
         return $this;
     }
