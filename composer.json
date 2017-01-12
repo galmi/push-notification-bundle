@@ -15,8 +15,7 @@
     },
     "require": {
         "php" : "^5.6",
-        "twig/twig": "1.x",
-        "symfony/framework-bundle": "^2.6.0",
+        "symfony/symfony" : "2.8.*",
         "php-http/guzzle6-adapter": "^1.1",
     	"norkunas/onesignal-php-api": "1.0.x-dev"
     },
