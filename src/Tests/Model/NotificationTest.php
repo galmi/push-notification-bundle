@@ -194,6 +194,10 @@ class NotificationTest extends \PHPUnit_Framework_TestCase
         $templating
             ->method('render')
             ->willReturn($templateXml)
+            ->method('exists')
+            ->willReturn(true)
+            ->method('supports')
+            ->willReturn(true)
         ;
 
         $notification = new Notification();
