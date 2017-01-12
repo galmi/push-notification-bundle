@@ -135,7 +135,7 @@ class NotificationTest extends \PHPUnit_Framework_TestCase
     /**
      * Test including of segments
      */
-    public function testIncludineSegments()
+    public function testIncludingSegments()
     {
         $segments = ['All', 'Test'];
 
@@ -156,9 +156,9 @@ class NotificationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test including of segments
+     * Test excluding of segments
      */
-    public function testExcludineSegments()
+    public function testExcludingSegments()
     {
         $segments = ['All', 'Test'];
 
@@ -176,5 +176,26 @@ class NotificationTest extends \PHPUnit_Framework_TestCase
         $notification->clearExcludedSegments();
 
         $this->assertCount(0, $notification->getExcludedSegments());
+    }
+
+    /**
+     * Test preparing from template
+     */
+    public function testPreparingFromTemplate()
+    {
+        $templating = $this->getMockBuilder('Symfony\Component\Templating\EngineInterface');
+        $templating
+            ->expects($this->once())
+            ->method('render')
+        ;
+
+        $notification = new Notification();
+        $notification
+            ->setTemplate('DmytrofPushNotificationBundle:PushNotification:test_notification.html.twig')
+            ->prepareFromTemplate($templating);
+
+        $this->assertEquals('Notification Subject', $notification->getSubject());
+        $this->assertEquals('Message of notification', $notification->getMessage());
+        $this->assertEquals('http://www.google.com', $notification->getUrl());
     }
 }
