@@ -192,9 +192,8 @@ class NotificationTest extends \PHPUnit_Framework_TestCase
                            ->setMethods(['render'])
                            ->getMock();
         $templating
-            ->expects($this->once())
             ->method('render')
-            ->will($this->returnValue($templateXml))
+            ->willReturn($templateXml)
         ;
 
         $notification = new Notification();
