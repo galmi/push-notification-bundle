@@ -189,7 +189,7 @@ class NotificationTest extends \PHPUnit_Framework_TestCase
         ";
 
         $templating = $this->getMockBuilder(EngineInterface::class)
-                           ->setMethods(['render'])
+                           ->setMethods(['render', 'exists', 'supports'])
                            ->getMock();
         $templating
             ->method('render')
