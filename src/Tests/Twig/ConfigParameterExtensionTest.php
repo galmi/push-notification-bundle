@@ -2,8 +2,9 @@
 
 namespace Dmytrof\PushNotificationBundle\Tests\Twig;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Dmytrof\PushNotificationBundle\Twig\ConfigParameterExtension;
+use Symfony\Component\DependencyInjection\Container;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Test for twig extension
@@ -30,28 +31,20 @@ class ConfigParameterExtensionTest extends \PHPUnit_Framework_TestCase
      */
     public function testCreateExtension()
     {
-        $container = $this->getMockBuilder(ContainerInterface::class)
+        $container = $this->getMockBuilder(Container::class)
                             ->disableOriginalConstructor()
+                            ->setMethods(['getParameter'])
                             ->getMock();
         $container
             ->method('getParameter')
             ->willReturnCallback([$this, 'getParameterCallback']);
         
         
-        $extension = new ConfigParameterExtension($container);
+        $extension = new ConfigParameterExtension();
+        $extension->setContainer($container);
         
-        $this->assertInstanceOf(ConfigParameterExtension::class, $extension->getContainer());
+        $this->assertInstanceOf(ContainerInterface::class, $extension->getContainer());
         
-        return $extension;
-    }
-    
-    /**
-     *  Test set config prefix
-     *
-     *  @depends testCreateExtension
-     */
-    public function testSetConfigPrefix(ConfigParameterExtension $extension)
-    {
         $extension->setConfigPrefix($this->configPrefix);
         
         $this->assertEquals($this->configPrefix, $extension->getConfigPrefix());
@@ -62,7 +55,7 @@ class ConfigParameterExtensionTest extends \PHPUnit_Framework_TestCase
     /**
      *  Test set config prefix
      *
-     *  @depends testSetConfigPrefix
+     *  @depends testCreateExtension
      */
     public function testGetPushNotificationParameter(ConfigParameterExtension $extension)
     {
