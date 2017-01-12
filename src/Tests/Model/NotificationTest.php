@@ -22,7 +22,7 @@ class NotificationTest extends \PHPUnit_Framework_TestCase
     {
         $notificationData = $this->getNotificationData();
 
-        $notification = new Notification($notificationData['subject'], $notificationData['message']);
+        $notification = new Notification($notificationData['message'], $notificationData['subject']);
 
         $this->assertEquals($notificationData['subject'], $notification->getSubject());
         $this->assertEquals($notificationData['message'], $notification->getMessage());
@@ -71,7 +71,7 @@ class NotificationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test setting of url
+     * Test setting of data
      */
     public function testAddData()
     {
@@ -94,5 +94,41 @@ class NotificationTest extends \PHPUnit_Framework_TestCase
         $notification->addData($data2);
 
         $this->assertEquals(array_merge($data, $data2), $notification->getData());
+        $this->assertCount(3, $notification->getData());
+    }
+
+    /**
+     * Test filtering by tags
+     */
+    public function testFiteringByTags()
+    {
+        $tag1 = [
+            'field' => 'tag',
+            'key' => 'tagName1',
+            'relation' => '=',
+            'value' => 'value1',
+        ];
+
+        $notification = new Notification();
+
+        $notification->filterByTag($tag1['key'], $tag1['relation'], $tag1['value']);
+
+        $this->assertEquals([$tag1], $notification->getFilters());
+
+        $tag2 = [
+            'field' => 'tag',
+            'key' => 'tagName2',
+            'relation' => '>',
+            'value' => '5',
+        ];
+
+        $notification->filterByTag($tag2['key'], $tag2['relation'], $tag2['value'], true);
+        $this->assertCount(3, $notification->getFilters());
+
+        $this->assertEquals([$tag1, ['operator' => 'OR'], $tag2], $notification->getFilters());
+
+
+        $notification->clearFilters();
+        $this->assertCount(0, $notification->getFilters());
     }
 }
