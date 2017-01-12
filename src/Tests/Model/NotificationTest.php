@@ -3,24 +3,21 @@
 namespace Dmytrof\PushNotificationBundle\Tests\Model;
 
 use Dmytrof\PushNotificationBundle\Model\Notification;
+use Dmytrof\PushNotificationBundle\Exception\RuntimeException;
+use Symfony\Component\Templating\EngineInterface;
 
 class NotificationTest extends \PHPUnit_Framework_TestCase
 {
-    public function getNotificationData()
-    {
-        return [
-            'subject' => 'Test subject',
-            'message' => 'Test message',
-            'locale'  => 'ru',
-        ];
-    }
-
     /**
      * Test creating of notification
      */
     public function testCreateNotification()
     {
-        $notificationData = $this->getNotificationData();
+        $notificationData = [
+            'subject' => 'Test subject',
+            'message' => 'Test message',
+            'locale'  => 'ru',
+        ];
 
         $notification = new Notification($notificationData['message'], $notificationData['subject']);
 
@@ -183,10 +180,21 @@ class NotificationTest extends \PHPUnit_Framework_TestCase
      */
     public function testPreparingFromTemplate()
     {
-        $templating = $this->getMockBuilder('Symfony\Component\Templating\EngineInterface');
+        $templateXml = "
+            <notification>
+                <subject>Notification Subject</subject>
+                <message>Message of notification</message>
+                <url>http://www.google.com</url>
+            </notification>
+        ";
+
+        $templating = $this->getMockBuilder(EngineInterface::class)
+                           ->setMethods(['render'])
+                           ->getMock();
         $templating
             ->expects($this->once())
             ->method('render')
+            ->will($this->returnValue($templateXml))
         ;
 
         $notification = new Notification();
@@ -197,5 +205,12 @@ class NotificationTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('Notification Subject', $notification->getSubject());
         $this->assertEquals('Message of notification', $notification->getMessage());
         $this->assertEquals('http://www.google.com', $notification->getUrl());
+
+
+        $this->expectException(RuntimeException::class);
+
+        $notification = new Notification();
+        $notification
+            ->prepareFromTemplate($templating);
     }
 }
