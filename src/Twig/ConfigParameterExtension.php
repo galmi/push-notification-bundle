@@ -53,14 +53,21 @@ class ConfigParameterExtension extends \Twig_Extension
     public function getFunctions()
     {
         return [
-            new \Twig_SimpleFunction('dmytrof_push_notification_parameter', function($name)
-            {
-                if (substr($name, 0, strlen($this->getConfigPrefix())) != $this->getConfigPrefix()) {
-                    $name = $this->getConfigPrefix().'.'.$name;
-                }
-                return $this->getContainer()->getParameter($name);
-            })
+            new \Twig_SimpleFunction('dmytrof_push_notification_parameter', [$this, 'getPushNotificationParameter']),
         ];
+    }
+    
+    /**
+     * @param string $name
+     *
+     * @return mixed
+     */
+    public function getPushNotificationParameter($name)
+    {
+        if (substr($name, 0, strlen($this->getConfigPrefix())) != $this->getConfigPrefix()) {
+            $name = $this->getConfigPrefix().'.'.$name;
+        }
+        return $this->getContainer()->getParameter($name);
     }
 
 

@@ -6,6 +6,9 @@ use Dmytrof\PushNotificationBundle\Model\Notification;
 use Dmytrof\PushNotificationBundle\Exception\RuntimeException;
 use Symfony\Component\Templating\EngineInterface;
 
+/**
+ * Test logic of notification
+ */
 class NotificationTest extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -206,7 +209,7 @@ class NotificationTest extends \PHPUnit_Framework_TestCase
 
         $notification = new Notification();
         $notification
-            ->setTemplate('DmytrofPushNotificationBundle:PushNotification:test_notification.html.twig')
+            ->setTemplate('AppBundle:PushNotification:test_notification.html.twig')
             ->prepareFromTemplate($templating);
 
         $this->assertEquals('Notification Subject', $notification->getSubject());
