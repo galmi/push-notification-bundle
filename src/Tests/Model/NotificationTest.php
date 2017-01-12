@@ -28,7 +28,7 @@ class NotificationTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($notificationData['message'], $notification->getMessage());
         $this->assertEquals(Notification::DEFAULT_LOCALE, $notification->getLocale());
 
-        $notification = new Notification($notificationData['subject'], $notificationData['message'], $notificationData['locale']);
+        $notification = new Notification($notificationData['message'], $notificationData['subject'], $notificationData['locale']);
 
         $this->assertEquals($notificationData['subject'], $notification->getSubject());
         $this->assertEquals($notificationData['message'], $notification->getMessage());
@@ -130,5 +130,51 @@ class NotificationTest extends \PHPUnit_Framework_TestCase
 
         $notification->clearFilters();
         $this->assertCount(0, $notification->getFilters());
+    }
+
+    /**
+     * Test including of segments
+     */
+    public function testIncludineSegments()
+    {
+        $segments = ['All', 'Test'];
+
+        $notification = new Notification();
+        $notification->includeSegments($segments);
+
+        $this->assertEquals($segments, $notification->getIncludedSegments());
+        $this->assertCount(2, $notification->getIncludedSegments());
+
+        $notification->includeSegments(['foo', 'bar']);
+
+        $this->assertCount(4, $notification->getIncludedSegments());
+        $this->assertEquals(array_merge($segments, ['foo', 'bar']), $notification->getIncludedSegments());
+
+        $notification->clearIncludedSegments();
+
+        $this->assertCount(0, $notification->getIncludedSegments());
+    }
+
+    /**
+     * Test including of segments
+     */
+    public function testExcludineSegments()
+    {
+        $segments = ['All', 'Test'];
+
+        $notification = new Notification();
+        $notification->excludeSegments($segments);
+
+        $this->assertEquals($segments, $notification->getExcludedSegments());
+        $this->assertCount(2, $notification->getExcludedSegments());
+
+        $notification->excludeSegments(['foo', 'bar']);
+
+        $this->assertCount(4, $notification->getExcludedSegments());
+        $this->assertEquals(array_merge($segments, ['foo', 'bar']), $notification->getExcludedSegments());
+
+        $notification->clearExcludedSegments();
+
+        $this->assertCount(0, $notification->getExcludedSegments());
     }
 }
