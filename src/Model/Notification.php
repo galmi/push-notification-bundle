@@ -188,7 +188,7 @@ class Notification
     public function filterByTag($key, $relation, $value='', $or=false)
     {
         if ($or) {
-            array_push($this->fields, [
+            array_push($this->filters, [
                 'operator' => 'OR',
             ]);
         }

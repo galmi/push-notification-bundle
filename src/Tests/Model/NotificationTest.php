@@ -160,17 +160,17 @@ class NotificationTest extends \PHPUnit_Framework_TestCase
      */
     public function testExcludingSegments()
     {
-        $segments = ['All', 'Test'];
+        $segments = ['Test'];
 
         $notification = new Notification();
         $notification->excludeSegments($segments);
 
         $this->assertEquals($segments, $notification->getExcludedSegments());
-        $this->assertCount(2, $notification->getExcludedSegments());
+        $this->assertCount(1, $notification->getExcludedSegments());
 
         $notification->excludeSegments(['foo', 'bar']);
 
-        $this->assertCount(4, $notification->getExcludedSegments());
+        $this->assertCount(3, $notification->getExcludedSegments());
         $this->assertEquals(array_merge($segments, ['foo', 'bar']), $notification->getExcludedSegments());
 
         $notification->clearExcludedSegments();
