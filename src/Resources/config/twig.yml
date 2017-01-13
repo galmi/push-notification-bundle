@@ -9,6 +9,7 @@ services:
         class: "%dmytrof_push_notification.twig_extension.web_push_sdk.class%"
         public: false
         calls:
+            - [ setContainer, [ "@service_container" ] ]
             - [ setProvider, [ "@dmytrof_push_notification.provider" ] ]
         tags:
             - { name: twig.extension }
