@@ -55,9 +55,9 @@ abstract class AbstractProvider implements ProviderInterface
      *
      * {@inheritDoc}
      */
-    public function createNotification($content=null, $subject=null, $locale=null)
+    public function createNotification($message=null, $subject=null, $locale=null)
     {
-        return new Notification();
+        return new Notification($message, $subject, $locale);
     }
 
     /**

@@ -88,13 +88,16 @@ class OneSignal extends AbstractProvider
      */
     public function sendPush(array $notificationData)
     {
+        $this->errorMessage = null;
+        $this->errorCode = null;
         // Call the REST Web Service
         $response = $this->client->notifications->add($notificationData);
+        
         // Check if its ok
-        if (!isset($response['error'])) {
+        if (!isset($response['errors'])) {
             return true;
         } else {
-            $this->errorMessage = join('; ', $response['error']);
+            $this->errorMessage = json_encode($response['errors']);
             $this->errorCode = null;
             return false;
         }
