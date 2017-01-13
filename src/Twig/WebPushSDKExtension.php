@@ -10,6 +10,7 @@ class WebPushSDKExtension extends \Twig_Extension
 {
     protected $container;
     protected $provider;
+    protected $configPrefix;
     protected $sdkRendered;
 
     /**
@@ -49,6 +50,25 @@ class WebPushSDKExtension extends \Twig_Extension
     {
         return $this->provider;
     }
+    
+    /**
+     * @return string
+     */
+    public function getConfigPrefix()
+    {
+        return $this->configPrefix;
+    }
+    
+    /**
+     * @param string $configPrefix
+     *
+     * @return WebPushSDKExtension
+     */
+    public function setConfigPrefix($configPrefix)
+    {
+        $this->configPrefix = $configPrefix;
+        return $this;
+    }
 
     /**
      * @return boolean
@@ -75,6 +95,7 @@ class WebPushSDKExtension extends \Twig_Extension
     public function getFunctions()
     {
         return [
+            new \Twig_SimpleFunction('dmytrof_push_notification_parameter', [$this, 'getPushNotificationParameter']),
             new \Twig_SimpleFunction('dmytrof_push_notification_web_sdk', [$this, 'renderSDK'], [
                'needs_environment' => true,
                'is_safe' => ['html'],
@@ -84,6 +105,19 @@ class WebPushSDKExtension extends \Twig_Extension
                 'is_safe' => ['html'],
             ])
         ];
+    }
+    
+    /**
+     * @param string $name
+     *
+     * @return mixed
+     */
+    public function getPushNotificationParameter($name)
+    {
+        if (substr($name, 0, strlen($this->getConfigPrefix())) != $this->getConfigPrefix()) {
+            $name = $this->getConfigPrefix().'.'.$name;
+        }
+        return $this->getContainer()->getParameter($name);
     }
 
     /**
@@ -97,7 +131,8 @@ class WebPushSDKExtension extends \Twig_Extension
             throw new RuntimeException('Web SDK is already rendered');
         }
         $this->setSDKRendered();
-        return $environment->render('DmytrofPushNotificationBundle:'.$this->getProvider()->getCode().':web_sdk/init.html.twig');
+        $template = $this->getPushNotificationParameter('web_sdk_init_template');
+        return $environment->render($template ?: 'DmytrofPushNotificationBundle:'.$this->getProvider()->getCode().':web_sdk/init.html.twig');
     }
 
     /**
@@ -108,7 +143,8 @@ class WebPushSDKExtension extends \Twig_Extension
      */
     public function renderTags(\Twig_Environment $environment, $wrapScript=false)
     {
-        return $environment->render('DmytrofPushNotificationBundle:'.$this->getProvider()->getCode().':web_sdk/tags.html.twig', [
+        $template = $this->getPushNotificationParameter('web_sdk_tags_template');
+        return $environment->render($template ?: 'DmytrofPushNotificationBundle:'.$this->getProvider()->getCode().':web_sdk/tags.html.twig', [
             'wrapScript'    => $wrapScript,
             'tags'          => $this->getProvider()->getTags(true),
             'removableTags' => $this->getProvider()->getRemovableTags(true),

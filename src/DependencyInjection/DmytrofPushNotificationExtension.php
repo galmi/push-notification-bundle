@@ -31,7 +31,7 @@ class DmytrofPushNotificationExtension extends Extension
                 throw new InvalidConfigurationException('The child node "provider" at path "'.$this->getAlias().'" must be "one_signal"');
         }
 
-        $container->getDefinition($this->getAlias().'.config_parameter.twig_extension')->addMethodCall('setConfigPrefix', [$this->getAlias()]);
+        $container->getDefinition($this->getAlias().'.web_push_sdk.twig_extension')->addMethodCall('setConfigPrefix', [$this->getAlias()]);
     }
 
     /**
