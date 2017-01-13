@@ -96,6 +96,7 @@ class WebPushSDKExtension extends \Twig_Extension
     {
         return [
             new \Twig_SimpleFunction('dmytrof_push_notification_parameter', [$this, 'getPushNotificationParameter']),
+            new \Twig_SimpleFunction('dmytrof_push_notification_provider_parameter', [$this, 'getPushNotificationProviderParameter']),
             new \Twig_SimpleFunction('dmytrof_push_notification_web_sdk', [$this, 'renderSDK'], [
                'needs_environment' => true,
                'is_safe' => ['html'],
@@ -119,6 +120,19 @@ class WebPushSDKExtension extends \Twig_Extension
         }
         return $this->getContainer()->getParameter($name);
     }
+    
+    /**
+     * @param string $name
+     *
+     * @return mixed
+     */
+    public function getPushNotificationProviderParameter($name)
+    {
+        if (substr($name, 0, strlen($this->getProvider()->getCode())) != $this->getProvider()->getCode() && substr($name, 0, strlen($this->getConfigPrefix())) != $this->getConfigPrefix()) {
+            $name = $this->getProvider()->getCode().'.'.$name;
+        }
+        return $this->getPushNotificationParameter($name);
+    }
 
     /**
      * @param \Twig_Environment $environment
@@ -131,7 +145,7 @@ class WebPushSDKExtension extends \Twig_Extension
             throw new RuntimeException('Web SDK is already rendered');
         }
         $this->setSDKRendered();
-        $template = $this->getPushNotificationParameter('web_sdk_init_template');
+        $template = $this->getPushNotificationProviderParameter('web_sdk_init_template');
         return $environment->render($template ?: 'DmytrofPushNotificationBundle:'.$this->getProvider()->getCode().':web_sdk/init.html.twig');
     }
 
@@ -143,7 +157,7 @@ class WebPushSDKExtension extends \Twig_Extension
      */
     public function renderTags(\Twig_Environment $environment, $wrapScript=false)
     {
-        $template = $this->getPushNotificationParameter('web_sdk_tags_template');
+        $template = $this->getPushNotificationProviderParameter('web_sdk_tags_template');
         return $environment->render($template ?: 'DmytrofPushNotificationBundle:'.$this->getProvider()->getCode().':web_sdk/tags.html.twig', [
             'wrapScript'    => $wrapScript,
             'tags'          => $this->getProvider()->getTags(true),

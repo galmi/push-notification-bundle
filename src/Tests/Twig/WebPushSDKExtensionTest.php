@@ -30,6 +30,11 @@ class WebPushSDKExtensionTest extends \PHPUnit_Framework_TestCase
     protected $paramValue = 'baz';
     
     /**
+     * @var string Dummy parameter value for provider
+     */
+    protected $providerParamValue = 'booz';
+    
+    /**
      * @var string Dummy provider code
      */
     protected $providerCode = 'test';
@@ -125,6 +130,10 @@ class WebPushSDKExtensionTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertEquals($this->paramValue, $extension->getPushNotificationParameter($this->paramName));
         $this->assertEquals($this->paramValue, $extension->getPushNotificationParameter($this->configPrefix.'.'.$this->paramName));
+        
+        $this->assertEquals($this->providerParamValue, $extension->getPushNotificationProviderParameter($this->paramName));
+        $this->assertEquals($this->providerParamValue, $extension->getPushNotificationProviderParameter($this->providerCode.'.'.$this->paramName));
+        $this->assertEquals($this->providerParamValue, $extension->getPushNotificationProviderParameter($this->configPrefix.'.'.$this->providerCode.'.'.$this->paramName));
     }
     
     /**
@@ -213,15 +222,18 @@ class WebPushSDKExtensionTest extends \PHPUnit_Framework_TestCase
      */
     public function getParameterCallback($name)
     {
-        if ($name == $this->configPrefix.'.web_sdk_init_template') {
+        $providerPrefix = $this->configPrefix.'.'.$this->providerCode;
+        
+        if ($name == $providerPrefix.'.web_sdk_init_template') {
             return $this->sdkInitTemplate;
-        } elseif ($name == $this->configPrefix.'.web_sdk_tags_template') {
+        } elseif ($name == $providerPrefix.'.web_sdk_tags_template') {
             return $this->sdkTagsTemplate;
+        } elseif (substr($name, 0, strlen($providerPrefix)) == $providerPrefix) {
+            $this->assertEquals($providerPrefix.'.'.$this->paramName, $name);
+            
+            return $this->providerParamValue;
         }
-        
-        $fullName = $this->configPrefix.'.'.$this->paramName;
-        
-        $this->assertEquals($fullName, $name);
+        $this->assertEquals($this->configPrefix.'.'.$this->paramName, $name);
     
         return $this->paramValue;
     }
