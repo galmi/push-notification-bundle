@@ -46,7 +46,7 @@ class OneSignal extends AbstractProvider
 
         $notificationData = [
             'contents' => [
-                $notification->getLocale() => $notification->getContent(),
+                $notification->getLocale() => $notification->getMessage(),
             ],
         ];
 
