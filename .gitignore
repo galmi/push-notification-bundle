@@ -44,6 +44,7 @@
 # Composer PHAR
 /composer.phar
 
+.idea/
 .settings/
 .buildpath
 .project
