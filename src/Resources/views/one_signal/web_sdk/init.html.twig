@@ -4,7 +4,7 @@
     OneSignal.push(["init", {
       appId: {{ dmytrof_push_notification_parameter('one_signal.app_id') | json_encode() | raw() }},
       autoRegister: {{ dmytrof_push_notification_parameter('one_signal.auto_register') | json_encode() | raw() }}, /* Set to true to automatically prompt visitors */
-      notifyButton: {{ dmytrof_push_notification_parameter('one_signal.notify_button') | json_encode() | raw() }},
+      notifyButton: {"enable": {{ dmytrof_push_notification_parameter('one_signal.notify_button') | json_encode() | raw() }}},
       {% if dmytrof_push_notification_parameter('one_signal.safari_web_id') %}safari_web_id: {{ dmytrof_push_notification_parameter('one_signal.safari_web_id') | json_encode() | raw() }},{% endif %}
       {% if dmytrof_push_notification_parameter('one_signal.subdomain') %}
       subdomainName: {{ dmytrof_push_notification_parameter('one_signal.subdomain') | json_encode() | raw() }},
